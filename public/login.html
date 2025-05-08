@@ -1,0 +1,130 @@
+<!-- public/login.html -->
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Giriş Yap - ChatMark</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/theme.css">
+  <style>
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #6366f1 0%, #10b981 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-container {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px 0 rgba(99,102,241,0.13), 0 2px 8px 0 rgba(16,185,129,0.10);
+      padding: 2.5rem 2.5rem 2rem 2.5rem;
+      max-width: 400px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      animation: noteFadeInUp 0.7s cubic-bezier(.4,0,.2,1);
+    }
+    .login-title {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #6366f1;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .login-title::before {
+      content: '🔐';
+      font-size: 1.5em;
+      margin-right: 0.25em;
+      opacity: 0.8;
+    }
+    .login-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    .login-form label {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #6366f1;
+      margin-bottom: 0.3rem;
+    }
+    .login-form input[type="email"],
+    .login-form input[type="text"],
+    .login-form input[type="password"] {
+      width: 100%;
+      padding: 0.85rem 1.1rem;
+      border-radius: 10px;
+      border: 1.5px solid #e2e8f0;
+      font-size: 1rem;
+      background: #f8fafc;
+      color: #222;
+      transition: border 0.16s;
+      margin-bottom: 0.2rem;
+    }
+    .login-form input:focus {
+      border-color: #6366f1;
+      outline: none;
+    }
+    .login-form button[type="submit"] {
+      background: #6366f1;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.9rem 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      box-shadow: 0 2px 8px rgba(99,102,241,0.08);
+      transition: background 0.18s, transform 0.18s;
+    }
+    .login-form button[type="submit"]:hover {
+      background: #10b981;
+      transform: scale(1.04);
+    }
+    .login-link {
+      margin-top: 0.5rem;
+      color: #6366f1;
+      font-size: 0.98rem;
+      text-align: center;
+      text-decoration: underline;
+      cursor: pointer;
+      transition: color 0.18s;
+    }
+    .login-link:hover {
+      color: #10b981;
+    }
+    @media (max-width: 600px) {
+      .login-container {
+        padding: 1.5rem 0.5rem 1.5rem 0.5rem;
+        max-width: 98vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="theme-toggle-container"></div>
+  <div class="login-container">
+    <div class="login-title">Giriş Yap</div>
+    <form id="loginForm" class="login-form" method="POST" action="/login">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required autocomplete="email">
+      <label for="password">Şifre</label>
+      <input type="password" id="password" name="password" required autocomplete="current-password">
+      <button type="submit">Giriş Yap</button>
+    </form>
+    <a href="/register.html" class="login-link">Hesabın yok mu? Kayıt Ol</a>
+    <div id="loginResult"></div>
+  </div>
+  <script src="/js/auth.js"></script>
+  <script src="/theme.js"></script>
+</body>
+</html>

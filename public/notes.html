@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notlarım - ChatMark</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/theme.css">
+  <style>
+    body {
+      background: var(--background);
+      min-height: 100vh;
+    }
+    .notes-main {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 2.5rem 0 2rem 0;
+    }
+    .notes-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface);
+      box-shadow: 0 4px 16px var(--shadow-color);
+      border-radius: 18px;
+      margin-bottom: 1.5rem;
+      padding: 1.1rem 2.5rem 1.1rem 2.5rem;
+      width: 100%;
+      max-width: 900px;
+      border: 1.5px solid var(--border);
+      transition: background 0.3s, box-shadow 0.3s, border 0.3s;
+      gap: 1.2rem;
+    }
+    .notes-header-bar .user-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .notes-header-bar .user-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: 0.01em;
+    }
+    .notes-header-bar .small-btn.gradient-btn {
+      background: linear-gradient(90deg, var(--primary) 60%, var(--secondary) 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 0.9rem 1.7rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 2px 8px var(--shadow-color);
+      transition: background 0.18s, transform 0.18s;
+      margin-left: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      min-width: 120px;
+      justify-content: center;
+    }
+    .notes-header-bar .small-btn.gradient-btn:hover {
+      background: linear-gradient(90deg, var(--secondary) 60%, var(--primary) 100%);
+      color: #fff;
+      transform: scale(1.06);
+    }
+    .notes-content-wrapper {
+      background: var(--surface);
+      border-radius: 28px;
+      box-shadow: 0 8px 32px 0 var(--shadow-color), 0 2px 8px 0 var(--shadow-color);
+      padding: 2.5rem 2.5rem 2rem 2.5rem;
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2.2rem;
+      animation: noteFadeInUp 0.7s cubic-bezier(.4,0,.2,1);
+      position: relative;
+    }
+    .notes-title {
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    .notes-title h1 {
+      font-size: 2.3rem;
+      font-weight: 900;
+      color: #22223b;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.7rem;
+      background: linear-gradient(90deg, #6366f1 30%, #10b981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .notes-desc {
+      font-size: 1.13rem;
+      color: #6366f1;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+      letter-spacing: 0.01em;
+      background: linear-gradient(90deg, #6366f1 30%, #10b981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .notes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 2.2rem;
+    }
+    @media (max-width: 1100px) {
+      .notes-header-bar, .notes-content-wrapper { max-width: 99vw; padding-left: 0.5rem; padding-right: 0.5rem; }
+    }
+    @media (max-width: 700px) {
+      .notes-header-bar { padding: 0.7rem 0.7rem; }
+      .notes-content-wrapper { padding: 1.2rem 0.2rem 1.2rem 0.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="theme-toggle-container"></div>
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>ChatMark</h2>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/index.html" class="sidebar-item">
+          <span>🏠</span>
+          <span>Anasayfa</span>
+        </a>
+        <a href="/favorites.html" class="sidebar-item">
+          <span>⭐</span>
+          <span>Favorilerim</span>
+        </a>
+        <a href="/notes.html" class="sidebar-item active">
+          <span>📝</span>
+          <span>Notlarım</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content notes-main">
+      <!-- Header -->
+      <header class="header notes-header-bar">
+        <div class="user-info" style="display:flex;align-items:center;gap:1rem;">
+          <div class="user-avatar" id="userAvatar">U</div>
+          <span id="userName">Kullanıcı</span>
+        </div>
+        <button id="logoutBtn" class="small-btn gradient-btn">Çıkış Yap</button>
+      </header>
+
+      <div class="notes-content-wrapper">
+        <div class="notes-title">
+          <h1>Notlarım</h1>
+          <p class="notes-desc">Stratejilere özel tüm notlarını burada görüntüleyebilir, düzenleyebilir veya silebilirsin.</p>
+        </div>
+        <!-- Notes Grid (Dinamik olarak JS ile doldurulacak) -->
+        <div id="allNotesSection">
+          <div class="notes-list" id="allNotesList">
+            <!-- Notlar burada dinamik olarak JS ile listelenecek -->
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="/js/auth.js"></script>
+  <script src="/js/note.js"></script>
+  <script src="/theme.js"></script>
+</body>
+</html>
