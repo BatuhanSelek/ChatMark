@@ -1,19 +1,23 @@
-const mysql = require('mysql2');
-
-// Veritabanı bağlantısı
-const db = mysql.createConnection({
+const mysql = require('mysql2/promise'); // ✅ Promise destekli versiyon
+const pool = mysql.createPool({
   host: 'localhost',
-  user: 'root',  // Veritabanı kullanıcı adı
-  password: '1234',  // Veritabanı şifresi
-  database: 'chatmark'  // Veritabanı adı
+  user: 'root',
+  password: '1234',
+  database: 'chatmark', // kendi veritabanı adın
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
-db.connect((err) => {
-  if (err) {
+// Bağlantıyı test et
+(async () => {
+  try {
+    const connection = await pool.getConnection();
+    console.log('Veritabanı bağlantısı başarılı');
+    connection.release(); // Bağlantıyı serbest bırak
+  } catch (err) {
     console.error('Veritabanı bağlantısı hatalı:', err.stack);
-    return;
   }
-  console.log('Veritabanı bağlantısı başarılı');
-});
+})();
 
-module.exports = db;
+module.exports = pool;

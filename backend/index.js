@@ -8,7 +8,10 @@ const authRoutes = require('./routes/auth');
 const stratRoutes = require('./routes/strategy');
 const favRoutes = require('./routes/favorites');
 const notesRoutes = require('./routes/notes');
-const db = require('./db');
+const statisticsRoutes = require('./routes/statistics');
+const goalRoutes = require('./routes/goalRoutes');
+const appliedRoutes = require('./routes/appliedRoutes');
+const pool = require('./db');
 
 const app = express();
 
@@ -33,6 +36,9 @@ app.get('/', (req, res) => {
 app.get('/login.html', (req, res) => res.sendFile(path.join(__dirname, '../public/login.html')));
 app.get('/register.html', (req, res) => res.sendFile(path.join(__dirname, '../public/register.html')));
 app.get('/favorites.html', (req, res) => res.sendFile(path.join(__dirname, '../public/favorites.html')));
+app.get('/statistics.html', (req, res) => res.sendFile(path.join(__dirname, '../public/statistics.html')));
+app.get('/goals.html', (req, res) => res.sendFile(path.join(__dirname, '../public/goals.html')));
+
 
 // API Route’ları
 app.use('/', authRoutes);
@@ -41,6 +47,9 @@ app.use('/', authRoutes);
 app.use('/getStrategy', stratRoutes);
 app.use('/favorites', favRoutes);
 app.use('/notes', notesRoutes);
+app.use('/statistics', statisticsRoutes);
+app.use('/goals', goalRoutes);
+app.use('/', appliedRoutes);
 
 // Statik dosyalar
 app.use(express.static(path.join(__dirname, '../public')));

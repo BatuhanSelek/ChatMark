@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Haftalık Hedefim</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/theme.css" />
+</head>
+
+<body>
+  <div class="container">
+    <h1>🎯 Haftalık Strateji Hedefim</h1>
+
+    <!-- Hedef Belirleme -->
+    <section id="goalSection" class="goal-card">
+      <p>Bu hafta kaç strateji uygulamak istiyorsun?</p>
+      <div class="goal-input-group">
+        <input type="number" id="targetInput" min="1" placeholder="Örn: 3" />
+        <button class="small-btn" id="setGoalBtn">Hedefi Kaydet</button>
+      </div>
+    </section>
+
+    <!-- İlerleme -->
+    <section id="progressSection" style="margin-top: 30px;">
+      <h3>📈 İlerleme Durumu</h3>
+      <p id="progressText">Henüz yüklenmedi...</p>
+      <div class="progress-container">
+        <div id="progressBar" class="progress-bar" style="width: 0%">0%</div>
+      </div>
+    </section>
+
+    <!-- Tebrik Mesajı -->
+    <div id="congratsMessage" style="display: none; margin-top: 30px;" class="success-message">
+      🎉 Tebrikler! Bu haftaki hedefini başarıyla tamamladın.
+      <button id="resetGoalBtn" class="small-btn">🔄 Yeniden Başla</button>
+    </div>
+
+    <div style="margin-top: 40px;">
+      <a href="/" class="small-btn">⬅ Ana Sayfaya Dön</a>
+    </div>
+  </div>
+
+  <script src="/js/goals.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>İstatistiklerim</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="theme.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>📊 İstatistiklerim</h1>
+        <div class="chart-grid">
+            <div class="chart-box"><canvas id="audienceChart"></canvas></div>
+            <div class="chart-box"><canvas id="budgetChart"></canvas></div>
+            <div class="chart-box"><canvas id="channelChart"></canvas></div>
+            <div class="chart-box"><canvas id="goalChart"></canvas></div>
+        </div>
+
+        <div id="statSummary" class="info-box" style="margin-top: 30px;"></div>
+
+        <div style="margin-top: 40px;">
+            <a href="/" class="small-btn">⬅ Ana Sayfaya Dön</a>
+        </div>
+    </div>
+    <script src="js/statistics.js"></script>
+</body>
+
+</html>
