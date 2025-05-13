@@ -7,9 +7,62 @@
   <title>Haftalık Hedefim</title>
   <link rel="stylesheet" href="/style.css" />
   <link rel="stylesheet" href="/theme.css" />
+  <style>
+    .sidebar {
+      width: 250px;
+      transition: transform 0.3s ease;
+      transform: translateX(0);
+    }
+    .sidebar.collapsed {
+      transform: translateX(-100%);
+    }
+    .sidebar-toggle {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background-color: #6366f1;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      font-size: 18px;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s ease;
+    }
+    .sidebar-toggle:hover {
+      background-color: #4f46e5;
+    }
+    .theme-toggle {
+      position: fixed;
+      top: 60px;
+      right: 15px;
+      background-color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease;
+    }
+    .theme-toggle:hover {
+      background-color: #f0f0f0;
+    }
+  </style>
 </head>
 
 <body>
+  <button class="sidebar-toggle">☰</button>
+  <button id="themeToggle" class="theme-toggle">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+    </svg>
+  </button>
   <div class="container">
     <h1>🎯 Haftalık Strateji Hedefim</h1>
 
@@ -42,7 +95,56 @@
     </div>
   </div>
 
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>ChatMark</h2>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/index.html" class="sidebar-item">
+        <span>🏠</span>
+        <span>Anasayfa</span>
+      </a>
+      <a href="/favorites.html" class="sidebar-item">
+        <span>⭐</span>
+        <span>Favorilerim</span>
+      </a>
+      <a href="/notes.html" class="sidebar-item">
+        <span>📝</span>
+        <span>Notlarım</span>
+      </a>
+      <a href="/statistics.html" class="sidebar-item">
+        <span>📊</span>
+        <span>İstatistiklerim</span>
+      </a>
+      <a href="/goals.html" class="sidebar-item active">
+        <span>📊</span>
+        <span>Hedef</span>
+      </a>
+      <button id="logoutBtn" class="sidebar-item">Çıkış Yap</button>
+    </nav>
+  </aside>
+
   <script src="/js/goals.js"></script>
+  <!-- <script src="/js/theme.js"></script> -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const sidebar = document.querySelector('.sidebar');
+      const toggleButton = document.querySelector('.sidebar-toggle');
+
+      toggleButton.addEventListener('click', function() {
+        sidebar.classList.toggle('collapsed');
+      });
+
+      document.getElementById('logoutBtn').addEventListener('click', async () => {
+        try {
+          await fetch('/logout', { method: 'POST', credentials: 'same-origin' });
+          window.location.href = '/login.html';
+        } catch {
+          alert('Çıkış yapılırken hata oluştu.');
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>

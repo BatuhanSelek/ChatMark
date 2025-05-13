@@ -30,9 +30,19 @@ app.use(session({
 
 // Frontend sayfaları
 app.get('/', (req, res) => {
-    if (req.session.userId) return res.sendFile(path.join(__dirname, '../public/index.html'));
-    res.redirect('/login.html');
+    if (req.session.userId) {
+        // Giriş yapmış kullanıcılar doğrudan index.html'e gider
+        return res.sendFile(path.join(__dirname, '../public/index.html'));
+    }
+    // Giriş yapılmadıysa splash göster
+    res.sendFile(path.join(__dirname, '../public/splash.html'));
 });
+
+
+// app.get('/', (req, res) => {
+//     if (req.session.userId) return res.sendFile(path.join(__dirname, '../public/index.html'));
+//     res.redirect('/login.html');
+// });
 app.get('/login.html', (req, res) => res.sendFile(path.join(__dirname, '../public/login.html')));
 app.get('/register.html', (req, res) => res.sendFile(path.join(__dirname, '../public/register.html')));
 app.get('/favorites.html', (req, res) => res.sendFile(path.join(__dirname, '../public/favorites.html')));

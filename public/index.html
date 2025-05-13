@@ -3,254 +3,321 @@
 <html lang="tr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ChatMark - Dijital Pazarlama Asistanı</title>
-    <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="/theme.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <style>
-      body {
-        background: var(--background);
-        min-height: 100vh;
-      }
-      .creative-bg {
-        min-height: 100vh;
-        background: none;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        padding: 2.5rem 0 2rem 0;
-      }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ChatMark - Dijital Pazarlama Asistanı</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/theme.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    body {
+      background: var(--background);
+      min-height: 100vh;
+    }
+
+    .creative-bg {
+      min-height: 100vh;
+      background: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 2.5rem 0 2rem 0;
+    }
+
+    .creative-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--surface);
+      box-shadow: 0 2px 12px 0 var(--shadow-color);
+      border-radius: 18px;
+      margin-bottom: 1.5rem;
+      padding: 0.7rem 2.5rem 0.7rem 2.5rem;
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.2rem;
+    }
+
+    .creative-user {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .creative-logout {
+      background: linear-gradient(90deg, #6366f1 60%, #10b981 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1.2rem;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(99, 102, 241, 0.08);
+      transition: background 0.18s, transform 0.18s;
+    }
+
+    .creative-logout:hover {
+      background: linear-gradient(90deg, #10b981 60%, #6366f1 100%);
+      transform: scale(1.06);
+    }
+
+    .creative-card {
+      background: var(--surface);
+      border-radius: 28px;
+      box-shadow: 0 8px 32px 0 var(--shadow-color), 0 2px 8px 0 var(--shadow-color);
+      padding: 2.5rem 2.5rem 2rem 2.5rem;
+      max-width: 480px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2.2rem;
+      animation: noteFadeInUp 0.7s cubic-bezier(.4, 0, .2, 1);
+      position: relative;
+    }
+
+    .creative-title {
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .creative-title h1 {
+      font-size: 2.3rem;
+      font-weight: 900;
+      color: #22223b;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.7rem;
+      background: linear-gradient(90deg, #6366f1 30%, #10b981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .creative-desc {
+      font-size: 1.13rem;
+      color: #6366f1;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+      letter-spacing: 0.01em;
+      background: linear-gradient(90deg, #6366f1 30%, #10b981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .creative-form label {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #6366f1;
+      margin-bottom: 0.3rem;
+    }
+
+    .creative-form select {
+      width: 100%;
+      padding: 0.85rem 1.1rem;
+      border-radius: 12px;
+      border: 1.5px solid #e2e8f0;
+      font-size: 1rem;
+      background: #f8fafc;
+      color: #222;
+      transition: border 0.16s;
+      margin-bottom: 1.1rem;
+      font-weight: 600;
+    }
+
+    .creative-form select:focus {
+      border-color: #6366f1;
+      outline: none;
+    }
+
+    .creative-form button[type="submit"] {
+      background: linear-gradient(90deg, #6366f1 60%, #10b981 100%);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 1rem 0;
+      font-size: 1.1rem;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      box-shadow: 0 2px 8px rgba(99, 102, 241, 0.08);
+      transition: background 0.18s, transform 0.18s;
+      letter-spacing: 0.01em;
+    }
+
+    .creative-form button[type="submit"]:hover {
+      background: linear-gradient(90deg, #10b981 60%, #6366f1 100%);
+      transform: scale(1.04);
+    }
+
+    #strategyResult {
+      margin-top: 2.2rem;
+      animation: noteFadeInUp 0.7s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    @media (max-width: 700px) {
       .creative-header {
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        background: var(--surface);
-        box-shadow: 0 2px 12px 0 var(--shadow-color);
-        border-radius: 18px;
-        margin-bottom: 1.5rem;
-        padding: 0.7rem 2.5rem 0.7rem 2.5rem;
-        width: 100%;
-        max-width: 480px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 1.2rem;
+        padding: 0.7rem 0.7rem;
+        max-width: 99vw;
       }
-      .creative-user {
-        display: flex;
-        align-items: center;
-        gap: 0.7rem;
-      }
-      .creative-logout {
-        background: linear-gradient(90deg, #6366f1 60%, #10b981 100%);
-        color: #fff;
-        border: none;
-        border-radius: 8px;
-        padding: 0.5rem 1.2rem;
-        font-size: 1rem;
-        font-weight: 700;
-        cursor: pointer;
-        box-shadow: 0 2px 8px rgba(99,102,241,0.08);
-        transition: background 0.18s, transform 0.18s;
-      }
-      .creative-logout:hover {
-        background: linear-gradient(90deg, #10b981 60%, #6366f1 100%);
-        transform: scale(1.06);
-      }
+
       .creative-card {
-        background: var(--surface);
-        border-radius: 28px;
-        box-shadow: 0 8px 32px 0 var(--shadow-color), 0 2px 8px 0 var(--shadow-color);
-        padding: 2.5rem 2.5rem 2rem 2.5rem;
-        max-width: 480px;
-        width: 100%;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        gap: 2.2rem;
-        animation: noteFadeInUp 0.7s cubic-bezier(.4,0,.2,1);
-        position: relative;
+        padding: 1.2rem 0.2rem 1.2rem 0.2rem;
+        max-width: 99vw;
       }
-      .creative-title {
-        text-align: center;
-        margin-bottom: 0.5rem;
-      }
-      .creative-title h1 {
-        font-size: 2.3rem;
-        font-weight: 900;
-        color: #22223b;
-        letter-spacing: -0.01em;
-        margin-bottom: 0.7rem;
-        background: linear-gradient(90deg, #6366f1 30%, #10b981 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-      .creative-desc {
-        font-size: 1.13rem;
-        color: #6366f1;
-        font-weight: 600;
-        margin-bottom: 0.2rem;
-        letter-spacing: 0.01em;
-        background: linear-gradient(90deg, #6366f1 30%, #10b981 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-      .creative-form label {
-        font-size: 1rem;
-        font-weight: 600;
-        color: #6366f1;
-        margin-bottom: 0.3rem;
-      }
-      .creative-form select {
-        width: 100%;
-        padding: 0.85rem 1.1rem;
-        border-radius: 12px;
-        border: 1.5px solid #e2e8f0;
-        font-size: 1rem;
-        background: #f8fafc;
-        color: #222;
-        transition: border 0.16s;
-        margin-bottom: 1.1rem;
-        font-weight: 600;
-      }
-      .creative-form select:focus {
-        border-color: #6366f1;
-        outline: none;
-      }
-      .creative-form button[type="submit"] {
-        background: linear-gradient(90deg, #6366f1 60%, #10b981 100%);
-        color: #fff;
-        border: none;
-        border-radius: 12px;
-        padding: 1rem 0;
-        font-size: 1.1rem;
-        font-weight: 800;
-        cursor: pointer;
-        margin-top: 0.5rem;
-        box-shadow: 0 2px 8px rgba(99,102,241,0.08);
-        transition: background 0.18s, transform 0.18s;
-        letter-spacing: 0.01em;
-      }
-      .creative-form button[type="submit"]:hover {
-        background: linear-gradient(90deg, #10b981 60%, #6366f1 100%);
-        transform: scale(1.04);
-      }
-      #strategyResult {
-        margin-top: 2.2rem;
-        animation: noteFadeInUp 0.7s cubic-bezier(.4,0,.2,1);
-      }
-      @media (max-width: 700px) {
-        .creative-header {
-          padding: 0.7rem 0.7rem;
-          max-width: 99vw;
-        }
-        .creative-card {
-          padding: 1.2rem 0.2rem 1.2rem 0.2rem;
-          max-width: 99vw;
-        }
-      }
-    </style>
+    }
+
+    .sidebar {
+      width: 250px;
+      transition: transform 0.3s ease;
+      transform: translateX(0);
+    }
+
+    .sidebar.collapsed {
+      transform: translateX(-100%);
+    }
+
+    .sidebar-toggle {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      background-color: #6366f1;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      font-size: 18px;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s ease;
+    }
+
+    .sidebar-toggle:hover {
+      background-color: #4f46e5;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="theme-toggle-container"></div>
-    <div class="dashboard">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <h2>ChatMark</h2>
-            </div>
-            <nav class="sidebar-nav">
-                <a href="/index.html" class="sidebar-item active">
-                    <span>🏠</span>
-                    <span>Anasayfa</span>
-                </a>
-                <a href="/favorites.html" class="sidebar-item">
-                    <span>⭐</span>
-                    <span>Favorilerim</span>
-                </a>
-                <a href="/notes.html" class="sidebar-item">
-                    <span>📝</span>
-                    <span>Notlarım</span>
-                </a>
-                <a href="/statistics.html" class="sidebar-item">
-                    <span>📊</span>
-                    <span>İstatistiklerim</span>
-                </a>
-                <a href="/goals.html" class="sidebar-item">
-                    <span>📊</span>
-                    <span>Hedef</span>
-                </a>
-            </nav>
-        </aside>
+  <div class="theme-toggle-container"></div>
+  <button class="sidebar-toggle">☰</button>
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>ChatMark</h2>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/index.html" class="sidebar-item active">
+          <span>🏠</span>
+          <span>Anasayfa</span>
+        </a>
+        <a href="/favorites.html" class="sidebar-item">
+          <span>⭐</span>
+          <span>Favorilerim</span>
+        </a>
+        <a href="/notes.html" class="sidebar-item">
+          <span>📝</span>
+          <span>Notlarım</span>
+        </a>
+        <a href="/statistics.html" class="sidebar-item">
+          <span>📊</span>
+          <span>İstatistiklerim</span>
+        </a>
+        <a href="/goals.html" class="sidebar-item">
+          <span>📊</span>
+          <span>Hedef</span>
+        </a>
+        <button id="logoutBtn" class="sidebar-item">Çıkış Yap</button>
+      </nav>
+    </aside>
 
-        <!-- Main Content -->
-        <main class="main-content creative-bg">
-            <!-- Header -->
-            <header class="header creative-header">
-                <div class="user-info creative-user">
-                    <div class="user-avatar" id="userAvatar">U</div>
-                    <span id="userName">Kullanıcı</span>
-                </div>
-                <button id="logoutBtn" class="small-btn creative-logout">Çıkış Yap</button>
-            </header>
+    <!-- Main Content -->
+    <main class="main-content creative-bg">
+      <!-- Header -->
+      <!-- <header class="header creative-header">
 
-            <!-- Content Wrapper -->
-            <div class="content-wrapper creative-card">
-                <div class="creative-title">
-                  <h1>Dijital Pazarlama Stratejini Bul</h1>
-                  <p class="creative-desc">İşletmen için en uygun dijital pazarlama stratejisini saniyeler içinde keşfet! Hedef kitleni, bütçeni ve amacını seç, sana özel öneriyi hemen al.</p>
-                </div>
-                <form id="strategyForm" class="strategy-form creative-form">
-                    <label for="sector">İşletme Türü:</label>
-                    <select id="sector" name="sector" required>
-                        <option value="Bireysel Girişimci">Bireysel Girişimci</option>
-                        <option value="E-Ticaret">E-Ticaret</option>
-                        <option value="Hizmet">Hizmet</option>
-                        <option value="Yerel İşletme">Yerel İşletme</option>
-                    </select>
+        <button id="logoutBtn" class="small-btn creative-logout">Çıkış Yap</button>
 
-                    <label for="audience">Hedef Kitle:</label>
-                    <select id="audience" name="audience" required>
-                        <option value="Gençler">Gençler</option>
-                        <option value="Orta Yaş">Orta Yaş</option>
-                        <option value="Yaşlı">Yaşlı</option>
-                    </select>
+      </header> -->
 
-                    <label for="budget">Bütçe:</label>
-                    <select id="budget" name="budget" required>
-                        <option value="Düşük Bütçe">Düşük Bütçe</option>
-                        <option value="Orta Bütçe">Orta Bütçe</option>
-                        <option value="Yüksek Bütçe">Yüksek Bütçe</option>
-                    </select>
+      <!-- Content Wrapper -->
+      <div class="content-wrapper creative-card">
+        <div class="creative-title">
+          <h1>Dijital Pazarlama Stratejini Bul</h1>
+          <p class="creative-desc">İşletmen için en uygun dijital pazarlama stratejisini saniyeler içinde keşfet! Hedef
+            kitleni, bütçeni ve amacını seç, sana özel öneriyi hemen al.</p>
+        </div>
+        <form id="strategyForm" class="strategy-form creative-form">
+          <label for="sector">İşletme Türü:</label>
+          <select id="sector" name="sector" required>
+            <option value="Bireysel Girişimci">Bireysel Girişimci</option>
+            <option value="E-Ticaret">E-Ticaret</option>
+            <option value="Hizmet">Hizmet</option>
+            <option value="Yerel İşletme">Yerel İşletme</option>
+          </select>
 
-                    <label for="marketing_goal">Hedef Amacı:</label>
-                    <select id="marketing_goal" name="marketing_goal" required>
-                        <option value="Satışları Artırma">Satışları Arttırma</option>
-                        <option value="Etkileşimi Artırma">Etkileşimi Arttırma</option>
-                        <option value="Müşteri Kazanımı">Müşteri Kazanımı</option>
-                        <option value="Marka Bilinirliği">Marka Bilinirliği</option>
-                        <option value="Müşteri Bağlılığı">Müşteri Bağlılığı</option>
-                    </select>
+          <label for="audience">Hedef Kitle:</label>
+          <select id="audience" name="audience" required>
+            <option value="Gençler">Gençler</option>
+            <option value="Orta Yaş">Orta Yaş</option>
+            <option value="Yaşlı">Yaşlı</option>
+          </select>
 
-                    <button type="submit">Stratejiyi Getir</button>
-                </form>
+          <label for="budget">Bütçe:</label>
+          <select id="budget" name="budget" required>
+            <option value="Düşük Bütçe">Düşük Bütçe</option>
+            <option value="Orta Bütçe">Orta Bütçe</option>
+            <option value="Yüksek Bütçe">Yüksek Bütçe</option>
+          </select>
 
-                <div id="strategyResult"></div>
-            </div>
-        </main>
-    </div>
+          <label for="marketing_goal">Hedef Amacı:</label>
+          <select id="marketing_goal" name="marketing_goal" required>
+            <option value="Satışları Artırma">Satışları Arttırma</option>
+            <option value="Etkileşimi Artırma">Etkileşimi Arttırma</option>
+            <option value="Müşteri Kazanımı">Müşteri Kazanımı</option>
+            <option value="Marka Bilinirliği">Marka Bilinirliği</option>
+            <option value="Müşteri Bağlılığı">Müşteri Bağlılığı</option>
+          </select>
 
-    <script src="/js/app.js"></script>
-    <script src="/js/auth.js"></script>
-    <script src="/theme.js"></script>
+          <button type="submit">Stratejiyi Getir</button>
+        </form>
+
+        <div id="strategyResult"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/app.js"></script>
+  <script src="/js/auth.js"></script>
+  <!-- <script src="/theme.js"></script> -->
+  <script>
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      try {
+        await fetch('/logout', { method: 'POST', credentials: 'same-origin' });
+        window.location.href = '/login.html';
+      } catch {
+        alert('Çıkış yapılırken hata oluştu.');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const sidebar = document.querySelector('.sidebar');
+      const toggleButton = document.querySelector('.sidebar-toggle');
+
+      toggleButton.addEventListener('click', function () {
+        sidebar.classList.toggle('collapsed');
+      });
+    });
+  </script>
 </body>
 
 </html>
