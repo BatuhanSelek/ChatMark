@@ -96,6 +96,9 @@ document.getElementById('strategyForm').addEventListener('submit', async e => {
     }
 
     const strat = data[0];
+    // AI chatbot alanını göster
+    document.getElementById('aiChatSection').style.display = 'block';
+    document.getElementById('strategyResult').innerText = strat.strategy; // Metni temiz şekilde yaz
 
     // Kart + Notlar UI
     resultEl.innerHTML = `

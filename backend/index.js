@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const session = require('express-session');
+require('dotenv').config(); // .env içeriğini alır
 
 const authRoutes = require('./routes/auth');
 const stratRoutes = require('./routes/strategy');
@@ -11,6 +12,7 @@ const notesRoutes = require('./routes/notes');
 const statisticsRoutes = require('./routes/statistics');
 const goalRoutes = require('./routes/goalRoutes');
 const appliedRoutes = require('./routes/appliedRoutes');
+const aiRoutes = require('./routes/aiRoutes');
 const pool = require('./db');
 
 const app = express();
@@ -59,6 +61,7 @@ app.use('/favorites', favRoutes);
 app.use('/notes', notesRoutes);
 app.use('/statistics', statisticsRoutes);
 app.use('/goals', goalRoutes);
+app.use('/api', aiRoutes);
 app.use('/', appliedRoutes);
 
 // Statik dosyalar

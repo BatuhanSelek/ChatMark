@@ -292,12 +292,26 @@
         </form>
 
         <div id="strategyResult"></div>
+        <!-- AI Chatbot Butonu ve Cevap Alanı -->
+        <div id="aiChatSection" style="display:none; margin-top: 2rem;">
+          <button id="askAIButton"
+            style="padding: 10px 20px; font-weight: 700; background: linear-gradient(90deg, #10b981, #6366f1); color: white; border: none; border-radius: 8px; cursor: pointer;">
+            Bu stratejiyi nasıl uygularım?
+          </button>
+
+          <div id="aiResponse"
+            style="margin-top: 1.5rem; background: #f1f5f9; padding: 1rem; border-radius: 10px; font-weight: 600; color: #1e293b;">
+          </div>
+        </div>
+
       </div>
     </main>
   </div>
 
   <script src="/js/app.js"></script>
   <script src="/js/auth.js"></script>
+  <script src="/js/chatbot.js"></script>
+
   <!-- <script src="/theme.js"></script> -->
   <script>
     document.getElementById('logoutBtn').addEventListener('click', async () => {
