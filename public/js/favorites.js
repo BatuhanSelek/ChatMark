@@ -22,8 +22,9 @@ async function loadFavorites() {
     const favs = await res.json();
     const appliedIds = await getAppliedStrategyIds();
 
-    const goalReset = sessionStorage.getItem('goalReset') === 'true'; // ✅ eklendi
-    sessionStorage.removeItem('goalReset'); // sadece ilk sayfa yüklemede çalışsın
+    const urlParams = new URLSearchParams(window.location.search);
+    const goalReset = urlParams.get('reset') === '1';
+
 
     if (!Array.isArray(favs) || favs.length === 0) {
       listDiv.textContent = 'Henüz favori strateji eklemediniz.';

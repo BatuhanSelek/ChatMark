@@ -86,9 +86,10 @@ document.addEventListener('DOMContentLoaded', async () => {
           });
           const data = await res.json();
           if (data.success) {
-            sessionStorage.setItem('goalReset', 'true'); // ✅ eklendi
+            sessionStorage.setItem('goalReset', 'true'); // Gerek kalmadı ama kalabilir
             alert('Yeni hedef belirlemek için giriş aktif edildi!');
-            location.reload(); // sayfayı yenile
+            // location.reload(); ❌ bu satır yerine:
+            window.location.href = '/favorites.html?reset=1'; // ✅ yönlendirme
           } else {
             console.error('Hedef sıfırlanamadı');
           }
@@ -96,6 +97,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           console.error('Sıfırlama hatası:', err);
         }
       }, 3000);
+
     }
 
   } catch (err) {

@@ -95,21 +95,31 @@ router.post('/increment', isAuthenticated, async (req, res) => {
   }
 });
 // ✅ Hedefi sıfırla
+// ✅ Hedefi sıfırla + uygulanan stratejileri temizle
 router.post('/reset', isAuthenticated, async (req, res) => {
   const userId = req.session.userId;
   try {
-    const sql = `
+    // 1. Son 7 gün içerisindeki hedefleri sil
+    await pool.query(`
       DELETE FROM goals 
       WHERE user_id = ? 
       AND applied_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)
-    `;
-    const [result] = await pool.query(sql, [userId]);
+    `, [userId]);
+
+    // 2. Aynı şekilde son 7 gün içindeki uygulanan stratejileri de sil
+    await pool.query(`
+      DELETE FROM applied_strategies 
+      WHERE user_id = ? 
+      AND applied_at >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+    `, [userId]);
+
     res.json({ success: true });
   } catch (err) {
     console.error('Hedef sıfırlama hatası:', err);
     res.status(500).json({ error: 'Hedef sıfırlanamadı' });
   }
 });
+
 
 
 module.exports = router;
