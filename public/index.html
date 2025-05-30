@@ -7,7 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ChatMark - Dijital Pazarlama Asistanı</title>
   <link rel="stylesheet" href="/style.css">
-  <link rel="stylesheet" href="/theme.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -74,8 +73,6 @@
       box-shadow: 0 8px 32px 0 var(--shadow-color), 0 2px 8px 0 var(--shadow-color);
       padding: 2.5rem 2.5rem 2rem 2.5rem;
       max-width: min(90vw, 1000px);
-
-      /* 💡 GENİŞLETİLDİ */
       width: 100%;
       margin: 0 auto;
       display: flex;
@@ -84,7 +81,6 @@
       animation: noteFadeInUp 0.7s cubic-bezier(.4, 0, .2, 1);
       position: relative;
     }
-
 
     .creative-title {
       text-align: center;
@@ -177,40 +173,29 @@
       }
     }
 
-    .sidebar {
-      width: 250px;
-      transition: transform 0.3s ease;
-      transform: translateX(0);
+    #aiResponse {
+
+      margin-top: 1.5rem;
+      background: #f8fafc;
+      padding: 1.25rem;
+      border-left: 5px solid #0ea5e9;
+      border-radius: 8px;
+      font-weight: 500;
+      color: #334155;
+      line-height: 1.6;
+      font-size: 1rem;
+      white-space: pre-line;
+      /* \n varsa yeni satır olarak gösterir */
     }
 
-    .sidebar.collapsed {
-      transform: translateX(-100%);
-    }
-
-    .sidebar-toggle {
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      background-color: #6366f1;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      padding: 10px;
-      font-size: 18px;
-      cursor: pointer;
-      z-index: 1000;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      transition: background-color 0.3s ease;
-    }
-
-    .sidebar-toggle:hover {
-      background-color: #4f46e5;
+    #aiResponse::before {
+      content: "• ";
+      color: #0ea5e9;
     }
   </style>
 </head>
 
 <body>
-  <div class="theme-toggle-container"></div>
   <button class="sidebar-toggle">☰</button>
   <div class="dashboard">
     <!-- Sidebar -->
@@ -236,8 +221,12 @@
           <span>İstatistiklerim</span>
         </a>
         <a href="/goals.html" class="sidebar-item">
-          <span>📊</span>
+          <span>🎯</span>
           <span>Hedef</span>
+        </a>
+        <a href="/calendar.html" class="sidebar-item">
+          <span>📅</span>
+          <span>Takvim</span>
         </a>
         <button id="logoutBtn" class="sidebar-item">Çıkış Yap</button>
       </nav>
@@ -245,14 +234,6 @@
 
     <!-- Main Content -->
     <main class="main-content creative-bg">
-      <!-- Header -->
-      <!-- <header class="header creative-header">
-
-        <button id="logoutBtn" class="small-btn creative-logout">Çıkış Yap</button>
-
-      </header> -->
-
-      <!-- Content Wrapper -->
       <div class="content-wrapper creative-card">
         <div class="creative-title">
           <h1>Dijital Pazarlama Stratejini Bul</h1>
@@ -302,18 +283,14 @@
             Bu stratejiyi nasıl uygularım?
           </button>
 
-          <div id="aiResponse"
-            style="margin-top: 1.5rem; background: #f1f5f9; padding: 1rem; border-radius: 10px; font-weight: 600; color: #1e293b;">
+          <div id="aiResponse">
           </div>
-
-
 
           <button id="saveAIResponseBtn"
             style="display:none; margin-top: 1rem; padding: 8px 16px; font-weight: bold; border: none; border-radius: 8px; background: linear-gradient(90deg, #6366f1, #10b981); color: white; cursor: pointer;">
             Yapay Zeka Yanıtını Kaydet
           </button>
         </div>
-
       </div>
     </main>
   </div>
@@ -321,8 +298,6 @@
   <script src="/js/app.js"></script>
   <script src="/js/auth.js"></script>
   <script src="/js/chatbot.js"></script>
-
-  <!-- <script src="/theme.js"></script> -->
   <script>
     document.getElementById('logoutBtn').addEventListener('click', async () => {
       try {

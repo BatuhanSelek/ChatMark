@@ -556,53 +556,125 @@ textarea#noteContent:focus {
   background: var(--background);
 }
 
-/* Sidebar */
+/* Common Sidebar Styles */
 .sidebar {
-  background: var(--surface);
-  padding: 2rem 1rem;
-  border-right: 1px solid var(--border);
-  width: 250px;
-  min-width: 220px;
-  max-width: 280px;
-  height: 100vh;
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+    width: 250px;
+    background: var(--surface);
+    color: var(--text-primary);
+    transition: transform 0.3s ease;
+    transform: translateX(0);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 1000;
+    box-shadow: 2px 0 8px var(--shadow-color);
+    border-right: 1px solid var(--border);
+}
+
+.sidebar.collapsed {
+    transform: translateX(-100%);
+}
+
+.sidebar-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.sidebar-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-align: center;
 }
 
 .sidebar-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+    padding: 1rem 0;
 }
 
 .sidebar-item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  color: var(--text-secondary);
-  text-decoration: none;
-  transition: var(--transition-normal);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: background-color 0.2s;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-size: 1rem;
 }
 
-.sidebar-item:hover {
-  background: var(--background);
-  color: var(--primary);
-}
-
+.sidebar-item:hover,
 .sidebar-item.active {
-  background: var(--primary);
-  color: white;
+    background-color: var(--surface-hover);
+    color: var(--primary);
 }
 
-/* Main Content */
+.sidebar-toggle {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 1001;
+    box-shadow: 0 2px 5px var(--shadow-color);
+    transition: background-color 0.3s ease;
+}
+
+.sidebar-toggle:hover {
+    background-color: var(--primary-hover);
+}
+
+/* Main Content Adjustment */
+.calendar-main,
+.fav-main,
+.notes-main,
+.goals-main,
+.index-main {
+    margin-left: 250px;
+    padding: 2rem;
+    min-height: 100vh;
+    transition: margin-left 0.3s ease;
+}
+
+.sidebar.collapsed + .calendar-main,
+.sidebar.collapsed + .fav-main,
+.sidebar.collapsed + .notes-main,
+.sidebar.collapsed + .goals-main,
+.sidebar.collapsed + .index-main {
+    margin-left: 0;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    
+    .sidebar.active {
+        transform: translateX(0);
+    }
+    
+    .calendar-main,
+    .fav-main,
+    .notes-main,
+    .goals-main,
+    .index-main {
+        margin-left: 0;
+        padding: 1rem;
+    }
+}
+
+/* Sidebar */
 .main-content {
   flex: 1 1 0%;
   margin-left: 250px;
@@ -1186,4 +1258,49 @@ font-size: 16px;
 }
 .fav-item.applied {
 background-color: #e6ffe6;
+}
+
+/* Button Styles */
+.small-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.small-btn:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.small-btn.gradient-btn {
+    background: linear-gradient(90deg, var(--primary) 60%, var(--secondary) 100%);
+}
+
+.small-btn.gradient-btn:hover {
+    background: linear-gradient(90deg, var(--secondary) 60%, var(--primary) 100%);
+}
+
+/* Card Styles */
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px var(--shadow-color);
+    transition: var(--transition-normal);
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px var(--shadow-color);
 }

@@ -1,17 +1,26 @@
 /* Theme System - ChatMark */
 
 :root {
-  /* Light Theme (Default) */
+  /* Colors */
   --primary: #6366F1;
   --primary-hover: #4F46E5;
   --primary-light: #818CF8;
   --secondary: #10B981;
   --secondary-hover: #059669;
+  --success: #22C55E;
+  --success-hover: #16A34A;
+  --danger: #EF4444;
+  --danger-hover: #DC2626;
+  --warning: #F59E0B;
+  --warning-hover: #D97706;
   --background: #F4F6FA;
   --surface: #FFFFFF;
+  --surface-hover: #F8FAFC;
   --text-primary: #1E293B;
   --text-secondary: #64748B;
+  --text-muted: #94A3B8;
   --border: #E2E8F0;
+  --border-hover: #CBD5E1;
   --shadow-color: rgba(0, 0, 0, 0.1);
   
   /* Animation Durations */
@@ -25,44 +34,6 @@
   --pastel-green: #E9FFE9;
   --pastel-yellow: #FFF9E6;
   --pastel-purple: #F3E6FF;
-}
-
-/* Dark Theme */
-[data-theme="dark"] {
-  --primary: #818CF8;
-  --primary-hover: #6366F1;
-  --primary-light: #A5B4FC;
-  --secondary: #34D399;
-  --secondary-hover: #10B981;
-  --background: #1E1E2F;
-  --surface: #2C2C3A;
-  --text-primary: #F0F0F0;
-  --text-secondary: #A0AEC0;
-  --border: #4A5568;
-  --shadow-color: rgba(0, 0, 0, 0.3);
-}
-
-/* Theme Toggle Button */
-.theme-toggle {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  z-index: 1000;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: var(--transition-normal);
-  box-shadow: 0 2px 8px var(--shadow-color);
-}
-
-.theme-toggle:hover {
-  transform: scale(1.1);
 }
 
 /* Page Transitions */

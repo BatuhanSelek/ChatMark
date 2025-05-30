@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Strateji Takvimi</title>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/style.css" />
+    <style>
+        body {
+            background: var(--background);
+            min-height: 100vh;
+        }
+
+        .calendar-main {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 2.5rem 0 2rem 0;
+        }
+
+        .calendar-content-wrapper {
+            background: var(--surface);
+            border-radius: 28px;
+            box-shadow: 0 8px 32px 0 var(--shadow-color), 0 2px 8px 0 var(--shadow-color);
+            padding: 2.5rem 2.5rem 2rem 2.5rem;
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2.2rem;
+            animation: noteFadeInUp 0.7s cubic-bezier(.4, 0, .2, 1);
+            position: relative;
+        }
+
+        .calendar-title {
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .calendar-title h1 {
+            font-size: 2.3rem;
+            font-weight: 900;
+            color: #22223b;
+            letter-spacing: -0.01em;
+            margin-bottom: 0.7rem;
+            background: linear-gradient(90deg, #6366f1 30%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .calendar-desc {
+            font-size: 1.13rem;
+            color: #6366f1;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+            letter-spacing: 0.01em;
+            background: linear-gradient(90deg, #6366f1 30%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        #calendar {
+            width: 100%;
+            background: var(--surface);
+            border-radius: 18px;
+            padding: 1rem;
+        }
+
+        #modalOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 998;
+        }
+
+        #strategyDialog {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--surface);
+            padding: 1.5rem 2rem;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px var(--shadow-color), 0 2px 8px var(--shadow-color);
+            z-index: 999;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            color: #111827;
+        }
+
+        #strategyDialog h3 {
+            margin-top: 0;
+            font-size: 1.3rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #6366f1 30%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        #strategyDialog p {
+            margin-top: 0.5rem;
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+
+        #strategyDialog button {
+            margin-top: 1.5rem;
+            background: linear-gradient(90deg, #6366f1 30%, #10b981 100%);
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s ease;
+        }
+
+        #strategyDialog button:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 900px) {
+            .calendar-content-wrapper {
+                max-width: 99vw;
+                padding: 1.2rem;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .calendar-content-wrapper {
+                padding: 1.2rem 0.2rem;
+            }
+        }
+
+        .fc-button {
+            background-color: #6366f1 !important;
+            /* arka plan rengi */
+            color: #fff !important;
+            /* yazı rengi */
+            border: none !important;
+            border-radius: 8px !important;
+            padding: 6px 12px !important;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .fc-button:hover {
+            background-color: #4f46e5 !important;
+        }
+    </style>
+</head>
+
+<body>
+    <button class="sidebar-toggle">☰</button>
+
+    <div class="calendar-main">
+        <div class="calendar-content-wrapper">
+            <div class="calendar-title">
+                <h1>📅 Strateji Takvimi</h1>
+                <p class="calendar-desc">Stratejilerinizi takvim üzerinde görüntüleyin ve yönetin.</p>
+            </div>
+            <div id="calendar"></div>
+        </div>
+    </div>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>ChatMark</h2>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="/index.html" class="sidebar-item">
+                <span>🏠</span>
+                <span>Anasayfa</span>
+            </a>
+            <a href="/favorites.html" class="sidebar-item">
+                <span>⭐</span>
+                <span>Favorilerim</span>
+            </a>
+            <a href="/notes.html" class="sidebar-item">
+                <span>📝</span>
+                <span>Notlarım</span>
+            </a>
+            <a href="/statistics.html" class="sidebar-item">
+                <span>📊</span>
+                <span>İstatistiklerim</span>
+            </a>
+            <a href="/goals.html" class="sidebar-item">
+                <span>🎯</span>
+                <span>Hedef</span>
+            </a>
+            <a href="/calendar.html" class="sidebar-item active">
+                <span>📅</span>
+                <span>Takvim</span>
+            </a>
+            <button id="logoutBtn" class="sidebar-item">Çıkış Yap</button>
+        </nav>
+    </aside>
+
+    <div id="modalOverlay"></div>
+    <div id="strategyDialog">
+        <h3>📌 Strateji İçeriği</h3>
+        <p id="strategyContent"></p>
+        <button onclick="closeDialog()">Kapat</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+    <script src="/js/auth.js"></script>
+    <script>
+        function closeDialog() {
+            document.getElementById('strategyDialog').style.display = 'none';
+            document.getElementById('modalOverlay').style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', async function () {
+            const sidebar = document.querySelector('.sidebar');
+            const toggleButton = document.querySelector('.sidebar-toggle');
+
+            toggleButton.addEventListener('click', function () {
+                sidebar.classList.toggle('collapsed');
+            });
+
+            document.getElementById('logoutBtn').addEventListener('click', async () => {
+                try {
+                    await fetch('/logout', { method: 'POST', credentials: 'same-origin' });
+                    window.location.href = '/login.html';
+                } catch {
+                    alert('Çıkış yapılırken hata oluştu.');
+                }
+            });
+
+            const calendarEl = document.getElementById('calendar');
+            let events = [];
+
+            try {
+                const res = await fetch('/calendar-events', {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+
+                if (res.status === 401) {
+                    alert("Lütfen giriş yapınız.");
+                    return;
+                }
+
+                events = await res.json();
+            } catch (err) {
+                console.error("❌ Hata:", err);
+            }
+
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'tr',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,listWeek'
+                },
+                buttonText: {
+                    today: 'Bugün',
+                    month: 'Ay',
+                    list: 'Liste'
+                },
+                events: events,
+                eventClick: function (info) {
+                    document.getElementById('strategyContent').innerText = info.event.title;
+                    document.getElementById('strategyDialog').style.display = 'block';
+                    document.getElementById('modalOverlay').style.display = 'block';
+                }
+            });
+
+            calendar.render();
+        });
+    </script>
+</body>
+
+</html>
